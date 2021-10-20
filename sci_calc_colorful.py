@@ -1,21 +1,29 @@
+# Importing in-built modules
+
 from tkinter import *
 from tkinter import font
 import math
 from fractions import Fraction
 
+# Initializing expression field as an empty string in global space
 expression = ""
 
 
+# Function to take input from the user
 def input_number(number, equation):
     global expression
     expression = expression + str(number)
     equation.set(expression)
+
+# Function to clear the input field
 
 
 def clear_input_field(equation):
     global expression
     expression = ""
     equation.set(expression)
+
+# Function to evaluate the expression
 
 
 def evaluate(equation):
@@ -30,6 +38,8 @@ def evaluate(equation):
     except SyntaxError:
         equation.set("Invalid Input/Operation")
         expression = ""
+
+# Function to Clear Recent/Undo Recent Input filed
 
 
 def back(equation):
@@ -73,6 +83,8 @@ def tan(equation):
     except ValueError:
         equation.set("Enter a value first")
         expression = ""
+
+# Trigonometric Functions (uses math module)
 
 
 def sinh(equation):
@@ -187,13 +199,6 @@ def exponential(equation):
         expression = ""
 
 
-def degree2fraction(equation):
-    global expression
-    result = Fraction(expression)
-    equation.set(result)
-    expression = equation.get()
-
-
 def radian(equation):
     global expression
     result = math.radians(float(expression))
@@ -207,16 +212,28 @@ def degree(equation):
     equation.set(result)
     expression = equation.get()
 
-# creating the GUI
+# Function to convert decimal to fraction (uses fractions module)
+
+
+def decimal2fraction(equation):
+    global expression
+    result = Fraction(expression)
+    equation.set(result)
+    expression = equation.get()
+
+# Creating the GUI
 
 
 def main():
+    # Creating the tkinter window
     window = Tk()
     window.title("Sci-Calc")
     window.iconbitmap(
         "C:\\Users\\varma\\Desktop\\py Programs\\tkinter\\calculator\\calc.ico")
     window.geometry("560x300")
     # window.resizable(width=0, height=0)   # Make window fixed/unresizable
+
+    # Making GUI responsive for custom as well as full-screen view
     n_rows = 6
     n_columns = 8
     for i in range(n_rows):
@@ -224,16 +241,21 @@ def main():
     for i in range(n_columns):
         window.grid_columnconfigure(i,  weight=1)
 
+    # Added a custom font (using font in tkinter)
     button_font = font.Font(family='Verdana', weight=font.BOLD)
 
+    # Varible class instantiation
     equation = StringVar()
 
+    # Note: We have used grid() out of the three methods (place, pack & grid) used in GUI for positioning
+    # Input field for the expression
     input_field = Entry(window, textvariable=equation,
                         relief=RIDGE, bd=10, font=("Verdana", 20))
     # NSEW: stretch items inside a grid in all 4 directions
     input_field.grid(row=0, columnspan=8, ipadx=15, ipady=15, sticky=NSEW)
     equation.set("Enter the expression")
 
+    # Adding buttons
     sin_button = Button(window, text="sin", fg="white", bg="green", command=lambda: sin(
         equation), height=3, width=6, borderwidth=10, font=button_font)
     sin_button.grid(row=1, column=0, sticky=NSEW)
@@ -343,7 +365,7 @@ def main():
     pi_button = Button(window, text="π", fg="white", bg="mediumblue", command=lambda: input_number(
         math.pi, equation), height=3, width=6, borderwidth=10, font=button_font)
     pi_button.grid(row=5, column=2, sticky=NSEW)
-    decimal_to_fraction_button = Button(window, text="S<>D", fg="white", bg="mediumblue", command=lambda: degree2fraction(
+    decimal_to_fraction_button = Button(window, text="S<>D", fg="white", bg="mediumblue", command=lambda: decimal2fraction(
         equation), height=3, width=6, borderwidth=10, font=button_font)
     decimal_to_fraction_button.grid(row=5, column=3, sticky=NSEW)
     rad_button = Button(window, text="RAD", fg="white", bg="darkorchid", command=lambda: radian(
@@ -359,8 +381,10 @@ def main():
         equation), height=3, width=6, borderwidth=10, font=button_font)
     equal_button.grid(row=5, column=7, sticky=NSEW)
 
+    # Showing the GUI
     window.mainloop()
 
 
+# Start of the program
 if __name__ == "__main__":
     main()

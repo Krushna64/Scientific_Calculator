@@ -51,6 +51,8 @@ def back(equation):
     else:
         expression = ""
 
+# Trigonometric Functions (uses math module)
+
 
 def sin(equation):
     global expression
@@ -84,8 +86,6 @@ def tan(equation):
         equation.set("Enter a value first")
         expression = ""
 
-# Trigonometric Functions (uses math module)
-
 
 def sinh(equation):
     global expression
@@ -95,6 +95,9 @@ def sinh(equation):
         expression = equation.get()
     except ValueError:
         equation.set("Enter a value first")
+        expression = ""
+    except OverflowError:
+        equation.set("OverflowError: Limit exceeded")
         expression = ""
 
 
@@ -106,6 +109,9 @@ def cosh(equation):
         expression = equation.get()
     except ValueError:
         equation.set("Enter a value first")
+        expression = ""
+    except OverflowError:
+        equation.set("OverflowError: Limit exceeded")
         expression = ""
 
 
@@ -196,6 +202,10 @@ def exponential(equation):
         expression = equation.get()
     except ValueError:
         equation.set("Enter value before finding exponential")
+        expression = ""
+    except OverflowError:
+        # Numbers < 710 are allowed. For 710 and above Overflow occurs.
+        equation.set("OverflowError: Use numbers < 710")
         expression = ""
 
 
